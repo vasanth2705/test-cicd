@@ -29,5 +29,4 @@ repos:
         additional_dependencies: [pydantic, pytest-mypy, types-PyYAML]
         args:
           - --ignore-missing-imports
-          - --disable-error-code=arg-type
         exclude: ^tests/integration/test_app\.py$
