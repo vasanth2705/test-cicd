@@ -5,9 +5,6 @@ on:
       - feature/**
       - main
 
-  pull_request:
-    branches:
-      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
@@ -42,6 +39,8 @@ jobs:
               - 'cal-comp-proc/**'
             test-comp-proc:
               - 'test-comp-proc/**'
+            source-comp-proc:
+              - 'source-comp-proc/**'
 
   pytest:
     name: Run tests on changed sources
