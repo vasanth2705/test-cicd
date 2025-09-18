@@ -58,3 +58,17 @@ jobs:
 
       - name: Debug - show current service in matrix
         run: echo "Running pytest for service - ${{ matrix.service }}"
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install uv
+        run: pip install uv
+
+      - name: Install deps & run pytest
+        run: |
+          cd ${{ matrix.service }}
+          uv sync
+          pytest

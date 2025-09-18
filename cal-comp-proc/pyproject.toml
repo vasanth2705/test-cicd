@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+
+[project]
+name = "dummy-project"
+version = "0.1.0"
+description = "A dummy project to test CI"
+authors = [{name = "Test User"}]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests"
+]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest"
+]
