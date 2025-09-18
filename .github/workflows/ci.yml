@@ -71,4 +71,4 @@ jobs:
         run: |
           cd ${{ matrix.service }}
           uv sync
-          pytest
+          uv run pytest
