@@ -1,4 +1,4 @@
-from src.dummy.main import add
+from dummy.main import add
 
 def test_add():
     assert add(2, 3) == 5

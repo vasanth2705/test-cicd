@@ -5,14 +5,13 @@ requires = ["setuptools", "wheel"]
 name = "dummy-project"
 version = "0.1.0"
 description = "A dummy project to test CI"
-authors = [{name = "Test User"}]
+authors = [{ name = "Test User" }]
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.pytest.ini_options]
-testpaths = [
-    "tests"
-]
+testpaths = ["tests"]
 
-[tool.uv]
-dev-dependencies = [
-    "pytest"
-]
+[dependency-groups]
+dev = ["pytest"]
