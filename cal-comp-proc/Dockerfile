@@ -10,6 +10,6 @@ COPY /pyproject.toml /uv.lock ./
 RUN pip install uv && uv sync --frozen
 
 # Copy only this service's code
-COPY ./calabrio-comp-proc/src ./src
+COPY src/ ./src/
 
 CMD ["python", "src/main.py"]
