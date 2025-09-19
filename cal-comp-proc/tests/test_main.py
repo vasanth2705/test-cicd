@@ -1,4 +1,4 @@
-from dummy.main import add
+from src.dummy.main import add
 
 
 def test_add():
