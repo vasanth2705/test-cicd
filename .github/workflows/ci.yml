@@ -71,4 +71,4 @@ jobs:
         run: |
           cd ${{ matrix.service }}
           uv sync
-          uv run pytest
+          PYTHONPATH=src uv run pytest
