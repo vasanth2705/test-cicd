@@ -1,14 +1,14 @@
-name: CD - Build Docker Images (Test Only)
-
+name: CD - Deploy Docker images (no push)
 on:
   push:
     branches:
       - feature/**
       - main
 
+
 concurrency:
-  group: ${{ github.workflow }}
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
 
 jobs:
   detect-changes:
