@@ -42,9 +42,9 @@ jobs:
       - name: Setup gcloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Force ADC usage for bq
+      - name: Export credentials for bq
         run: |
-          gcloud config set auth/use_application_default_credentials true
+          echo "CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${GOOGLE_APPLICATION_CREDENTIALS}" >> $GITHUB_ENV
 
       - name: Verify active account
         run: |
