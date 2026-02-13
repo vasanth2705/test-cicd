@@ -143,7 +143,7 @@ jobs:
               UPDATED_ACCESS=$(mktemp)
               
               PRINCIPAL_EMAIL="${PRINCIPAL#*:}"
-
+              
               jq --argjson binding "$(cat ${BINDING_FILE})" \
                  --arg principal "${PRINCIPAL_EMAIL}" \
                  '
@@ -151,7 +151,7 @@ jobs:
                    .access = (
                      .access
                      | map(
-                         if .role == "roles/bigquery.dataViewer" then
+                         if .role == "READER" then
                            if (.userByEmail == $principal) or (.groupByEmail == $principal) then
                              empty
                            else
@@ -169,6 +169,7 @@ jobs:
                  .access += [$binding]
                  ' \
                  "${CURRENT_ACCESS}" > "${UPDATED_ACCESS}"
+
               
               # Update the dataset with new access policy
               if OUTPUT=$(bq update --source "${UPDATED_ACCESS}" "${DMN_PROJECT_ID}:${FULL_DATASET_NAME}" 2>&1); then
