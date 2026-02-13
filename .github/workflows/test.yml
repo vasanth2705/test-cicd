@@ -126,6 +126,10 @@ jobs:
               # Get current dataset access policy
               CURRENT_ACCESS=$(mktemp)
               bq show --format=prettyjson "${DMN_PROJECT_ID}:${FULL_DATASET_NAME}" > "${CURRENT_ACCESS}"
+              echo "----- CURRENT_ACCESS CONTENT -----"
+              cat "${CURRENT_ACCESS}"
+              echo "-----------------------------------"
+
               
               # Extract existing access array and add new binding
               UPDATED_ACCESS=$(mktemp)
