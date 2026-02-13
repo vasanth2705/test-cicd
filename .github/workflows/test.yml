@@ -86,6 +86,7 @@ jobs:
             for PRINCIPAL in "${PRINCIPALS[@]}"; do
               PRINCIPAL=$(echo "$PRINCIPAL" | xargs)
               echo "Granting access to: ${PRINCIPAL}"
+              echo "New line"
 
               # Create a temporary JSON file for the IAM binding
               BINDING_FILE=$(mktemp)
@@ -124,6 +125,7 @@ jobs:
               fi
 
               # Get current dataset access policy
+              echo "---new line---"
               CURRENT_ACCESS=$(mktemp)
               bq show --format=prettyjson "${DMN_PROJECT_ID}:${FULL_DATASET_NAME}" > "${CURRENT_ACCESS}"
               echo "----- CURRENT_ACCESS CONTENT -----"
