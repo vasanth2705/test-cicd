@@ -1,0 +1,45 @@
+name: WIF Sanity Test (Env Version)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-wif-auth:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write   # REQUIRED for OIDC
+
+    env:
+      WIF_PROJECT_ID: "vasanthguru-7"
+      DMN_PROJECT_ID: "vasanthguru-7"
+      WORKLOAD_IDENTITY_PROVIDER: "projects/1084646747755/locations/global/workloadIdentityPools/github-pool/providers/github-provider"
+      GCP_IMPERSONATION_SA: "github-ci-test-sa@vasanthguru-7.iam.gserviceaccount.com"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud via WIF
+        uses: google-github-actions/auth@v3
+        with:
+          project_id: ${{ env.WIF_PROJECT_ID }}
+          workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.GCP_IMPERSONATION_SA }}
+
+      - name: Setup gcloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Verify active account
+        run: |
+          echo "Active gcloud account:"
+          gcloud auth list
+          echo "Project:"
+          gcloud config get-value project
+
+      - name: Test BigQuery access
+        run: |
+          echo "Listing datasets..."
+          bq ls
+
