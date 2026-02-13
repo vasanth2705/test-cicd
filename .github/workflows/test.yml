@@ -142,18 +142,37 @@ jobs:
               # Extract existing access array and add new binding
               UPDATED_ACCESS=$(mktemp)
               
-              # Check if access array exists, if not create it
-              if jq -e '.access' "${CURRENT_ACCESS}" > /dev/null 2>&1; then
-                # Add new binding to existing access array
-                jq --argjson binding "$(cat ${BINDING_FILE})" \
-                  '.access += [$binding]' \
-                  "${CURRENT_ACCESS}" > "${UPDATED_ACCESS}"
-              else
-                # Create new access array with the binding
-                jq --argjson binding "$(cat ${BINDING_FILE})" \
-                  '. + {access: [$binding]}' \
-                  "${CURRENT_ACCESS}" > "${UPDATED_ACCESS}"
-              fi
+              PRINCIPAL_EMAIL="${PRINCIPAL#*:}"
+
+              jq --argfile binding "${BINDING_FILE}" \
+                 --arg principal "${PRINCIPAL_EMAIL}" \
+                 '
+                 # Ensure access array exists
+                 if .access then
+                   .
+                 else
+                   . + {access: []}
+                 end
+                 |
+                 # Remove existing binding for same role + principal
+                 .access |= map(
+                   select(
+                     not(
+                       .role == "roles/bigquery.dataViewer"
+                       and (
+                         (.userByEmail? == $principal)
+                         or
+                         (.groupByEmail? == $principal)
+                       )
+                     )
+                   )
+                 )
+                 |
+                 # Add updated binding
+                 .access += [$binding]
+                 ' \
+                 "${CURRENT_ACCESS}" > "${UPDATED_ACCESS}"
+
               
               # Update the dataset with new access policy
               if OUTPUT=$(bq update --source "${UPDATED_ACCESS}" "${DMN_PROJECT_ID}:${FULL_DATASET_NAME}" 2>&1); then
