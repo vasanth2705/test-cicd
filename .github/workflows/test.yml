@@ -132,7 +132,8 @@ jobs:
               echo "---new line---"
               bq show --format=prettyjson "${DMN_PROJECT_ID}:${FULL_DATASET_NAME}"
               CURRENT_ACCESS=$(mktemp)
-              bq show --format=prettyjson "${DMN_PROJECT_ID}:${FULL_DATASET_NAME}" 2>/dev/null > "${CURRENT_ACCESS}"
+              bq show --format=prettyjson "${DMN_PROJECT_ID}:${FULL_DATASET_NAME}" \
+                | sed -n '/^{/,$p' > "${CURRENT_ACCESS}"
               echo "----- CURRENT_ACCESS CONTENT -----"
               cat "${CURRENT_ACCESS}"
               echo "-----------------------------------"
