@@ -2,6 +2,17 @@ name: WIF Sanity Test (Env Version)
 
 on:
   workflow_dispatch:
+    inputs:
+        grant_read_access_to_domain_datasets:
+          required: true
+          default: 'true'
+        domain_access_principals:
+          required: true
+        domain_datasets:
+          required: true
+        access_expiration_days:
+          required: true
+          default: '1'
 
 jobs:
   test-wif-auth:
@@ -42,4 +53,107 @@ jobs:
         run: |
           echo "Listing datasets..."
           bq ls
+
+      - name: Grant temporary read access to domain datasets
+        if: github.event_name == 'workflow_dispatch' && inputs.grant_read_access_to_domain_datasets == 'true' && inputs.domain_access_principals != '' && inputs.domain_datasets != ''
+        run: |
+          EXPIRATION_DAYS="${{inputs.access_expiration_days || '1'}}"
+          BRANCH_PREFIX="${GITHUB_REF_NAME//[^a-zA-Z0-9_]/_}"
+
+          # Calculate expiration date
+          EXPIRATION_DATE=$(date -u -d "+${EXPIRATION_DAYS} days" +"%Y-%m-%dT%H:%M:%SZ")
+
+          echo "========================================"
+          echo "Granting Temporary Read Access"
+          echo "========================================"
+          echo "Branch prefix: ${BRANCH_PREFIX}"
+          echo "Access expires: ${EXPIRATION_DATE} (in ${EXPIRATION_DAYS} days)"
+
+          # Split comma-separated datasets and principals
+          IFS=',' read -ra DATASET_NAMES <<< "${{ inputs.domain_datasets }}"
+          IFS=',' read -ra PRINCIPALS <<< "${{ inputs.domain_access_principals }}"
+
+          echo "Mapping dataset names:"
+          echo "----------------------------------------"
+
+          for DATASET_NAME in "${DATASET_NAMES[@]}"; do
+            DATASET_NAME=$(echo "${DATASET_NAME}" | xargs)
+            FULL_DATASET_NAME="${BRANCH_PREFIX}_${DATASET_NAME}"
+            
+            echo "Dataset: ${DATASET_NAME} → ${FULL_DATASET_NAME}"
+            echo "----------------------------------------"
+
+            for PRINCIPAL in "${PRINCIPALS[@]}"; do
+              PRINCIPAL=$(echo "$PRINCIPAL" | xargs)
+              echo "Granting access to: ${PRINCIPAL}"
+
+              # Create a temporary JSON file for the IAM binding
+              BINDING_FILE=$(mktemp)
+
+              # Create a temporary JSON file for the IAM binding
+              BINDING_FILE=$(mktemp)
+              
+              # Determine the binding type based on principal prefix
+              if [[ "$PRINCIPAL" == group:* ]]; then
+                cat > "${BINDING_FILE}" <<EOF
+            {
+              "role": "roles/bigquery.dataViewer",
+              "groupByEmail": "${PRINCIPAL#group:}",
+              "condition": {
+                "title": "Temporary access until ${EXPIRATION_DATE}",
+                "description": "Read access expires on ${EXPIRATION_DATE}",
+                "expression": "request.time < timestamp('${EXPIRATION_DATE}')"
+              }
+            }
+          EOF
+              elif [[ "$PRINCIPAL" == user:* ]]; then
+                cat > "${BINDING_FILE}" <<EOF
+            {
+              "role": "roles/bigquery.dataViewer",
+              "userByEmail": "${PRINCIPAL#user:}",
+              "condition": {
+                "title": "Temporary access until ${EXPIRATION_DATE}",
+                "description": "Read access expires on ${EXPIRATION_DATE}",
+                "expression": "request.time < timestamp('${EXPIRATION_DATE}')"
+              }
+            }
+          EOF
+              else
+                echo "Warning: Principal ${PRINCIPAL} doesn't start with 'group:' or 'user:'"
+                continue
+              fi
+
+              # Get current dataset access policy
+              CURRENT_ACCESS=$(mktemp)
+              bq show --format=prettyjson "${DMN_PROJECT_ID}:${FULL_DATASET_NAME}" > "${CURRENT_ACCESS}"
+              
+              # Extract existing access array and add new binding
+              UPDATED_ACCESS=$(mktemp)
+              
+              # Check if access array exists, if not create it
+              if jq -e '.access' "${CURRENT_ACCESS}" > /dev/null 2>&1; then
+                # Add new binding to existing access array
+                jq --argjson binding "$(cat ${BINDING_FILE})" \
+                  '.access += [$binding]' \
+                  "${CURRENT_ACCESS}" > "${UPDATED_ACCESS}"
+              else
+                # Create new access array with the binding
+                jq --argjson binding "$(cat ${BINDING_FILE})" \
+                  '. + {access: [$binding]}' \
+                  "${CURRENT_ACCESS}" > "${UPDATED_ACCESS}"
+              fi
+              
+              # Update the dataset with new access policy
+              if OUTPUT=$(bq update --source "${UPDATED_ACCESS}" "${DMN_PROJECT_ID}:${FULL_DATASET_NAME}" 2>&1); then
+                echo "✓ Successfully granted access to ${PRINCIPAL} on ${FULL_DATASET_NAME}"
+              else
+                echo "✗ Failed to grant access to ${PRINCIPAL} on ${FULL_DATASET_NAME}"
+                echo "Error: ${OUTPUT}"
+              fi
+              
+              # Clean up temp files
+              rm -f "${BINDING_FILE}" "${CURRENT_ACCESS}" "${UPDATED_ACCESS}"
+                    
+            done
+          done
 
