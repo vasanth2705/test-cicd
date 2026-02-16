@@ -82,7 +82,7 @@ jobs:
 
           for DATASET_NAME in "${DATASET_NAMES[@]}"; do
             DATASET_NAME=$(echo "${DATASET_NAME}" | xargs)
-            FULL_DATASET_NAME="${BRANCH_PREFIX}_${DATASET_NAME}"
+            FULL_DATASET_NAME="main_${DATASET_NAME}"
             
             echo "Dataset: ${DATASET_NAME} → ${FULL_DATASET_NAME}"
             echo "----------------------------------------"
