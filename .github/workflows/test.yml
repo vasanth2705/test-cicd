@@ -142,33 +142,18 @@ jobs:
               # Extract existing access array and add new binding
               UPDATED_ACCESS=$(mktemp)
               
-              PRINCIPAL_EMAIL="${PRINCIPAL#*:}"
-              
-              jq --argjson binding "$(cat ${BINDING_FILE})" \
-                 --arg principal "${PRINCIPAL_EMAIL}" \
-                 '
-                 if .access then
-                   .access = (
-                     .access
-                     | map(
-                         if .role == "READER" then
-                           if (.userByEmail == $principal) or (.groupByEmail == $principal) then
-                             empty
-                           else
-                             .
-                           end
-                         else
-                           .
-                         end
-                       )
-                   )
-                 else
-                   .access = []
-                 end
-                 |
-                 .access += [$binding]
-                 ' \
-                 "${CURRENT_ACCESS}" > "${UPDATED_ACCESS}"
+              # Check if access array exists, if not create it
+              if jq -e '.access' "${CURRENT_ACCESS}" > /dev/null 2>&1; then
+                # Add new binding to existing access array
+                jq --argjson binding "$(cat ${BINDING_FILE})" \
+                  '.access += [$binding]' \
+                  "${CURRENT_ACCESS}" > "${UPDATED_ACCESS}"
+              else
+                # Create new access array with the binding
+                jq --argjson binding "$(cat ${BINDING_FILE})" \
+                  '. + {access: [$binding]}' \
+                  "${CURRENT_ACCESS}" > "${UPDATED_ACCESS}"
+              fi
 
               
               # Update the dataset with new access policy
