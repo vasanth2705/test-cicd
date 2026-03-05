@@ -18,8 +18,8 @@ jobs:
 
           subject: Dataset Access Granted
 
-          to: ${{ secrets.EMAIL_TO }}
-          from: ${{ secrets.EMAIL_FROM }}
+          to: vasanthguru2728@gmail.com
+          from: vasanthguru75@gmail.com
 
           body: |
             Hello, Good Morning!
