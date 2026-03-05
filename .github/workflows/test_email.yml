@@ -1,4 +1,4 @@
-name: Send Dataset Access Email
+name: Send Email via Gmail
 
 on:
   workflow_dispatch:
@@ -8,22 +8,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Send Email Notification
+      - name: Send email
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
-          server_port: 465
-          secure: true
+          server_port: 587
+          secure: false
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
 
-          subject: Dataset Access Granted
-
-          to: vasanthguru2728@gmail.com
-          from: vasanthguru75@gmail.com
+          subject: GitHub Action Test Email
+          to: ${{ secrets.SMTP_USERNAME }}
+          from: ${{ secrets.SMTP_USERNAME }}
 
           body: |
-            Hello, Good Morning!
+            Hello,
 
-            Regards,
-            Vasanth
+            This email was sent from GitHub Actions.
+
+            Example Query:
+            SELECT *
+            FROM `project.dataset.table`
+            LIMIT 10;
+
+            Regards
+            Data Engineering
