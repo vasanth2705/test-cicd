@@ -14,8 +14,8 @@ jobs:
           server_address: smtp.gmail.com
           server_port: 587
           secure: false
-          username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }}
+          username: vasanthguru75@gmail.com
+          password: cccxllgcwxixcgqj
 
           subject: GitHub Action Test Email
           to: vasanthguru75@gmail.com
