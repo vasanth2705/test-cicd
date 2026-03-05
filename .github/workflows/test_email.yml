@@ -22,22 +22,19 @@ jobs:
           server_address: smtp.gmail.com
           server_port: 587
           secure: false
-          username: vasanthguru75@gmail.com
-          password: cccxllgcwxixcgqj
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
 
           subject: GitHub Action Test Email
-          to: vasanthguru75@gmail.com
-          from: vasanthguru75@gmail.com
+          to: ${{ secrets.SMTP_USERNAME }}
+          from: ${{ secrets.SMTP_USERNAME }}
 
           body: |
-            Hello,
+            Hello, Good Afternoon!
+            You have been provided with read access for this dataset - <>
+            You can now query this table using the query
 
-            This email was sent from GitHub Actions.
-
-            Example Query:
-            SELECT *
-            FROM `project.dataset.table`
-            LIMIT 10;
-
+            select * from table;
+            
             Regards
-            Data Engineering
+            Naanthaan
