@@ -8,6 +8,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Debug secrets
+        run: |
+          if [ -z "${{ secrets.SMTP_USERNAME }}" ]; then
+            echo "SMTP_USERNAME is empty"
+          else
+            echo "SMTP_USERNAME loaded"
+          fi
+          
       - name: Send email
         uses: dawidd6/action-send-mail@v3
         with:
