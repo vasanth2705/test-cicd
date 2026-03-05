@@ -19,7 +19,7 @@ jobs:
 
           subject: GitHub Action Test Email
           to: ${{ secrets.SMTP_USERNAME }}
-          from: ${{ secrets.SMTP_USERNAME }}
+          from: vasanthguru75@gmail.com
 
           body: |
             Hello,
