@@ -16,25 +16,36 @@ jobs:
             echo "SMTP_USERNAME loaded"
           fi
           
-      - name: Send email
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.office365.com
-          server_port: 587
-          secure: false
-          username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }}
+      # - name: Send email
+      #   uses: dawidd6/action-send-mail@v3
+      #   with:
+      #     server_address: smtp.office365.com
+      #     server_port: 587
+      #     secure: false
+      #     username: ${{ secrets.SMTP_USERNAME }}
+      #     password: ${{ secrets.SMTP_PASSWORD }}
 
-          subject: GitHub Action Test Email
-          to: ${{ secrets.SMTP_USERNAME }}
-          from: ${{ secrets.SMTP_USERNAME }}
+      #     subject: GitHub Action Test Email
+      #     to: ${{ secrets.SMTP_USERNAME }}
+      #     from: ${{ secrets.SMTP_USERNAME }}
 
-          body: |
-            Hello, Good Afternoon!
-            You have been provided with read access for this dataset - <>
-            You can now query this table using the query
+      #     body: |
+      #       Hello, Good Afternoon!
+      #       You have been provided with read access for this dataset - <>
+      #       You can now query this table using the query
 
-            select * from table;
+      #       select * from table;
             
-            Regards
-            Naanthaan
+      #       Regards
+      #       Naanthaan
+
+      - name: Send Mail via Graph API Action
+        uses: microsoftgraph/action-send-mail@v1
+        with:
+          client_id: 1e92202d-df29-47f2-a054-40c26ba341de
+          tenant_id: b0e1798b-5c5b-42af-adb9-0b2f086b7836
+          client_secret: bW98Q~ICiER6CHDHzYUHjSzqKxfptAd3Kwe..drZ
+          sender_email: "vasanthguru27@outlook.com"
+          to_email: vasanthguru75@gmail.com
+          subject: "GHA Notification: Success"
+          body: "Dataset access has been granted."
