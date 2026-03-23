@@ -3,7 +3,7 @@ id: urn:test:datacontract:system:test:test_folder:dna_contract
 info:
   title: Test data contract
   status: active
-  version: 1.1.0
+  version: 1.2.0
   description: 'Sys model for fact
 
     '
@@ -148,4 +148,4 @@ models:
         required: false
       HeaderNote:
         type: string
-        required: true
+        required: false
