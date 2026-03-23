@@ -1,0 +1,24 @@
+name: Test Workflow Dispatch
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy"
+        required: false
+        default: "test"
+
+jobs:
+  test-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print trigger info
+        run: |
+          echo "🚀 Workflow triggered!"
+          echo "Branch: ${{ github.ref }}"
+          echo "Environment: ${{ github.event.inputs.environment }}"
+
+      - name: Dummy step
+        run: |
+          echo "This is a test deployment step"
