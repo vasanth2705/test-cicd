@@ -3,7 +3,7 @@ id: urn:test:datacontract:system:test:test_folder:dna_contract
 info:
   title: Test data contract
   status: active
-  version: 1.2.0
+  version: 1.0.0
   description: 'Sys model for fact
 
     '
@@ -14,7 +14,7 @@ info:
 terms:
   usage: To serve as source for downstream Domain Layer
 links:
-  confluenceSpace: link
+  confluenceSpace: https://rituals.atlassian.net/wiki/spaces/DeeDee/folder/5549621359?atlOrigin=eyJpIjoiOGZhYjdkMTBkY2I5NDQ4M2JlZDgwZWE5NTZkYWZhM2QiLCJwIjoiYyJ9
 models:
   test:
     type: table
@@ -144,8 +144,5 @@ models:
         type: string
         required: false
       HSO_DnA_Record_Status:
-        type: string
-        required: false
-      HeaderNote:
         type: string
         required: false
