@@ -1,0 +1,157 @@
+dataContractSpecification: 1.2.1
+id: urn:test:datacontract:system:test:test_folder:dna_contract
+info:
+  title: Test data contract
+  status: active
+  version: 2.0.0
+  description: 'Sys model for fact
+
+    '
+  owner: test-team
+  contact:
+    name: test-team
+    email: test@mail.com
+terms:
+  usage: To serve as source for downstream Domain Layer
+links:
+  confluenceSpace: https://rituals.atlassian.net/wiki/spaces/DeeDee/folder/5549621359?atlOrigin=eyJpIjoiOGZhYjdkMTBkY2I5NDQ4M2JlZDgwZWE5NTZkYWZhM2QiLCJwIjoiYyJ9
+models:
+  test:
+    type: table
+    fields:
+      HSO_DnA_TargetMappingID:
+        type: int
+        required: false
+      HSO_DnA_InsertDateTime:
+        type: timestamp_tz
+        required: false
+      HSO_DnA_UpdateDateTime:
+        type: timestamp_tz
+        required: false
+      HSO_DnA_DeleteDateTime:
+        type: timestamp_tz
+        required: false
+      BackOrderStatus:
+        type: string
+        required: false
+      BomDate:
+        type: timestamp_tz
+        required: false
+      BomId:
+        type: string
+        required: false
+      CalcDate:
+        type: timestamp_tz
+        required: false
+      DataAreaId:
+        type: string
+        required: false
+      DlvDate:
+        type: timestamp_tz
+        required: false
+      DlvTime:
+        type: timestamp_tz
+        required: false
+      InventDimId:
+        type: string
+        required: false
+      InventTransId:
+        type: string
+        required: false
+      ItemId:
+        type: string
+        required: false
+      LatestSchedDate:
+        type: timestamp_tz
+        required: false
+      LatestSchedDirection:
+        type: string
+        required: false
+      LatestSchedTime:
+        type: timestamp_tz
+        required: false
+      Name:
+        type: string
+        required: false
+      ProdId:
+        type: string
+        required: false
+      ProdPostingType:
+        type: string
+        required: false
+      ProdPrio:
+        type: int
+        required: false
+      ProdStatus:
+        type: string
+        required: false
+      ProdType:
+        type: string
+        required: false
+      ProductionOrderBK:
+        type: string
+        required: false
+      QtyCalc:
+        type: decimal
+        required: false
+        precision: 28
+        scale: 12
+      QtySched:
+        type: decimal
+        required: false
+        precision: 28
+        scale: 12
+      QtyReportedAsFinished:
+        type: decimal
+        required: false
+        precision: 28
+        scale: 12
+      QtyStUp:
+        type: decimal
+        required: false
+        precision: 28
+        scale: 12
+      RefLookUp:
+        type: string
+        required: false
+      ReleasedDate:
+        type: timestamp_tz
+        required: false
+      RemainInventPhysical:
+        type: decimal
+        required: false
+        precision: 28
+        scale: 12
+      SchedDate:
+        type: timestamp_tz
+        required: false
+      SchedEnd:
+        type: timestamp_tz
+        required: false
+      SchedFromTime:
+        type: timestamp_tz
+        required: false
+      SchedStart:
+        type: timestamp_tz
+        required: false
+      SchedStatus:
+        type: string
+        required: false
+      SchedToTime:
+        type: timestamp_tz
+        required: false
+      SourceSystem:
+        type: string
+        required: false
+      StUpDate:
+        type: timestamp_tz
+        required: false
+      WarehouseNum:
+        type: string
+        required: false
+      HSO_DnA_Record_Status:
+        type: string
+        required: false
+      HeaderNote:
+        type: string
+        required: false
