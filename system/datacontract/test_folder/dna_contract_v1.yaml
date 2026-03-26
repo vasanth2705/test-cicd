@@ -102,7 +102,10 @@ models:
         precision: 28
         scale: 12
       QtyReportedAsFinished:
-        type: int
+        type: decimal
+        required: false
+        precision: 28
+        scale: 12
       QtyStUp:
         type: decimal
         required: false
@@ -115,7 +118,10 @@ models:
         type: timestamp_tz
         required: false
       RemainInventPhysical:
-        type: string
+        type: decimal
+        required: false
+        precision: 28
+        scale: 12
       SchedDate:
         type: timestamp_tz
         required: false
@@ -138,7 +144,7 @@ models:
         type: string
         required: false
       StUpDate:
-        type: string
+        type: timestamp_tz
         required: false
       WarehouseNum:
         type: string
