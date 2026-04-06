@@ -11,6 +11,8 @@ info:
   contact:
     name: test-team
     email: test@mail.com
+terms:
+  usage: To serve as source for downstream Domain Layer
 models:
   test:
     type: table
@@ -87,11 +89,6 @@ models:
       ProductionOrderBK:
         type: string
         required: false
-      QtyCalc:
-        type: decimal
-        required: false
-        precision: 28
-        scale: 12
       QtySched:
         type: decimal
         required: false
@@ -151,5 +148,3 @@ models:
       HeaderNote:
         type: string
         required: false
-terms:
-  usage: To serve as source for downstream Domain Layer
