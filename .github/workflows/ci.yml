@@ -1,9 +1,6 @@
 name: Dummy CI
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
       - '**'   # runs on push to any branch
