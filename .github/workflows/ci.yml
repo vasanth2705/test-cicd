@@ -1,60 +1,26 @@
-name: CI - Precommit & Tests
+name: Dummy CI
+
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
-      - feature/**
-      - main
-
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
-  cancel-in-progress: true
+      - '**'   # runs on push to any branch
 
 jobs:
-  precommit:
-    name: Run pre-commit checks
+  dummy-job:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - name: Install pre-commit
-        run: pip install pre-commit
+      - name: Print event info
+        run: |
+          echo "Event: ${{ github.event_name }}"
+          echo "Branch: ${{ github.ref }}"
+          echo "Actor: ${{ github.actor }}"
 
-      - name: Run pre-commit
-        run: pre-commit run --all-files
-
-  detect-changes:
-    name: Detect changed sources
-    runs-on: ubuntu-latest
-    outputs:
-      services: ${{ steps.filter.outputs.changes }}
-    steps:
-      - uses: actions/checkout@v3
-
-      - id: filter
-        uses: dorny/paths-filter@v3
-        with:
-          filters: |
-            cal-comp-proc:
-              - 'cal-comp-proc/**'
-            test-comp-proc:
-              - 'test-comp-proc/**'
-            source-comp-proc:
-              - 'source-comp-proc/**'
-
-  pytest:
-    name: Run tests on changed sources
-    needs: [detect-changes]
-    runs-on: ubuntu-latest
-    if: needs.detect-changes.outputs.services != '[]'
-    strategy:
-      matrix:
-        service: ${{ fromJSON(needs.detect-changes.outputs.services) }}
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Debug - show all changed services
-        run: echo "Changed services - ${{ needs.detect-changes.outputs.services }}"
-
-      - name: Debug - show current service in matrix
-        run: echo "Running pytest for service - ${{ matrix.service }}"
+      - name: Dummy step
+        run: echo "CI is running successfully 🚀"
