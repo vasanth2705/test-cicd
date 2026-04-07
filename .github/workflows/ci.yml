@@ -1,12 +1,9 @@
-name: Dummy CI
+name: CI
 
-on:
-  push:
-    branches:
-      - '**'   # runs on push to any branch
+on: [push]
 
 jobs:
-  dummy-job:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
