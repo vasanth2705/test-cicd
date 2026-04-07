@@ -1,5 +1,5 @@
 dataContractSpecification: 1.2.1
-id: urn:rituals:datacontract:system:test:test_folder:dna_contract
+id: urn:test:datacontract:system:test:test_folder:dna_contract
 info:
   title: Test data contract
   version: 2.1.0
