@@ -13,8 +13,6 @@ info:
     email: test@mail.com
 terms:
   usage: To serve as source for downstream Domain Layer
-links:
-  confluenceSpace: https://rituals.atlassian.net/wiki/spaces/DeeDee/folder/5549621359?atlOrigin=eyJpIjoiOGZhYjdkMTBkY2I5NDQ4M2JlZDgwZWE5NTZkYWZhM2QiLCJwIjoiYyJ9
 models:
   test:
     type: table
