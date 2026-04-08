@@ -2,20 +2,18 @@ dataContractSpecification: 1.2.1
 id: urn:rituals:datacontract:system:sc:dna:fact_production_order
 info:
   title: Test data contract
-  status: active
-  version: 1.0.0
+  version: 1.1.0
   description: 'Sys model for fact
 
     '
   owner: test-team
+  status: active
   contact:
     name: test-team
     email: test@mail.com
-terms:
-  usage: To serve as source for downstream Domain Layer
 models:
   fpo:
-    description: 'Fact production order'
+    description: Fact production order
     type: table
     fields:
       hso_dna_target_mapping_id:
@@ -145,9 +143,14 @@ models:
       st_up_date:
         type: timestamp_tz
         required: false
+      warehouse_num:
+        type: string
+        required: false
       hso_dna_record_status:
         type: string
         required: false
       header_note:
         type: string
         required: false
+terms:
+  usage: To serve as source for downstream Domain Layer
