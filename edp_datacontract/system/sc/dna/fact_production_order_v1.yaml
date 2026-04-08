@@ -1,0 +1,153 @@
+dataContractSpecification: 1.2.1
+id: urn:rituals:datacontract:system:sc:dna:fact_production_order
+info:
+  title: Test data contract
+  status: active
+  version: 1.0.0
+  description: 'Sys model for fact
+
+    '
+  owner: test-team
+  contact:
+    name: test-team
+    email: test@mail.com
+terms:
+  usage: To serve as source for downstream Domain Layer
+models:
+  fpo:
+    description: 'Fact production order'
+    type: table
+    fields:
+      hso_dna_target_mapping_id:
+        type: int
+        required: false
+      hso_dna_insert_date_time:
+        type: timestamp_tz
+        required: false
+      hso_dna_update_date_time:
+        type: timestamp_tz
+        required: false
+      hso_dna_delete_date_time:
+        type: timestamp_tz
+        required: false
+      back_order_status:
+        type: string
+        required: false
+      bom_date:
+        type: timestamp_tz
+        required: false
+      bom_id:
+        type: string
+        required: false
+      calc_date:
+        type: timestamp_tz
+        required: false
+      data_area_id:
+        type: string
+        required: false
+      dlv_date:
+        type: timestamp_tz
+        required: false
+      dlv_time:
+        type: timestamp_tz
+        required: false
+      invent_dim_id:
+        type: string
+        required: false
+      invent_trans_id:
+        type: string
+        required: false
+      item_id:
+        type: string
+        required: false
+      latest_sched_date:
+        type: timestamp_tz
+        required: false
+      latest_sched_direction:
+        type: string
+        required: false
+      latest_sched_time:
+        type: timestamp_tz
+        required: false
+      name:
+        type: string
+        required: false
+      prod_id:
+        type: string
+        required: false
+      prod_posting_type:
+        type: string
+        required: false
+      prod_prio:
+        type: int
+        required: false
+      prod_status:
+        type: string
+        required: false
+      prod_type:
+        type: string
+        required: false
+      production_order_bk:
+        type: string
+        required: false
+      qty_calc:
+        type: decimal
+        required: false
+        precision: 28
+        scale: 12
+      qty_sched:
+        type: decimal
+        required: false
+        precision: 28
+        scale: 12
+      qty_reported_as_finished:
+        type: decimal
+        required: false
+        precision: 28
+        scale: 12
+      qty_st_up:
+        type: decimal
+        required: false
+        precision: 28
+        scale: 12
+      ref_look_up:
+        type: string
+        required: false
+      released_date:
+        type: timestamp_tz
+        required: false
+      remain_invent_physical:
+        type: decimal
+        required: false
+        precision: 28
+        scale: 12
+      sched_date:
+        type: timestamp_tz
+        required: false
+      sched_end:
+        type: timestamp_tz
+        required: false
+      sched_from_time:
+        type: timestamp_tz
+        required: false
+      sched_start:
+        type: timestamp_tz
+        required: false
+      sched_status:
+        type: string
+        required: false
+      sched_to_time:
+        type: timestamp_tz
+        required: false
+      source_system:
+        type: string
+        required: false
+      st_up_date:
+        type: timestamp_tz
+        required: false
+      hso_dna_record_status:
+        type: string
+        required: false
+      header_note:
+        type: string
+        required: false
