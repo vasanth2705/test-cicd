@@ -2,7 +2,7 @@ dataContractSpecification: 1.2.1
 id: urn:rituals:datacontract:system:test:test_folder:dna_contract
 info:
   title: Test data contract
-  version: 2.0.0
+  version: 2.1.0
   description: 'Sys model for fact
 
     '
@@ -11,8 +11,6 @@ info:
   contact:
     name: test-team
     email: test@mail.com
-terms:
-  usage: To serve as source for downstream Domain Layer
 models:
   test:
     type: table
@@ -89,6 +87,11 @@ models:
       ProductionOrderBK:
         type: string
         required: false
+      QtyCalc:
+        type: decimal
+        required: false
+        precision: 28
+        scale: 12
       QtySched:
         type: decimal
         required: false
@@ -148,3 +151,5 @@ models:
       HeaderNote:
         type: string
         required: false
+terms:
+  usage: To serve as source for downstream Domain Layer
