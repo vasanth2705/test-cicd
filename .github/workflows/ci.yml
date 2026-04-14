@@ -16,5 +16,14 @@ jobs:
           echo "Branch: ${{ github.ref }}"
           echo "Actor: ${{ github.actor }}"
 
+      - name: Simulate work (2-3 min)
+        run: |
+          echo "Starting long-running checks..."
+          for i in $(seq 1 150); do
+            echo "Step $i/150"
+            sleep 1
+          done
+          echo "All checks passed ✅"
+
       - name: Dummy step
         run: echo "CI is running successfully 🚀"
