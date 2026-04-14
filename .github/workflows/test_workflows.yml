@@ -19,6 +19,15 @@ jobs:
           echo "Branch: ${{ github.ref }}"
           echo "Environment: ${{ github.event.inputs.environment }}"
 
+      - name: Simulate deployment (2-3 min)
+        run: |
+          echo "Starting deployment to ${{ github.event.inputs.environment }}..."
+          for i in $(seq 1 150); do
+            echo "Step $i/150"
+            sleep 1
+          done
+          echo "Deployment complete ✅"
+
       - name: Dummy step
         run: |
           echo "This is a test deployment step"
